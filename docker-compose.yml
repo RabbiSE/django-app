@@ -4,7 +4,7 @@ services:
       context: ./nginx
     container_name: "nginx_container"
     ports: 
-      - "80:00"
+      - "80:80"
     networks: 
       - django-app-network
     restart: always
