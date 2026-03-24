@@ -5,20 +5,26 @@ services:
     build:
       context: ./nginx
     container_name: "nginx_container"
-    ports: "80:00"
-    networks: django-app-network
+    ports: 
+      - "80:00"
+    networks: 
+      - django-app-network
     restart: always
-    depends_on: django
+    depends_on: 
+      - django
 
   db:
     image: mysql
     container_name: "db_container"
-    ports: "3306:3306"
+    ports: 
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=db_main
-    volumes: django-app-mysql-volume:/var/lib/mysql
-    networks: django-app-network
+    volumes: 
+      - django-app-mysql-volume:/var/lib/mysql
+    networks: 
+      - django-app-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
@@ -31,10 +37,13 @@ services:
     build:
       context: .
     container_name: "django_container"
-    ports: "8000:8000"
+    ports: 
+      - "8000:8000"
     command: sh -c "python manage.py migrate --noinput && gunicorn notesapp.wsgi --bind 0.0.0.0:8000"
-    networks: django-app-network
-    env_file: ".env"
+    networks: 
+      - django-app-network
+    env_file: 
+      - ".env"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/admin || exit 1"]
       interval: 10s
@@ -42,7 +51,8 @@ services:
       retries: 5
       start_period: 30s
     restart: always
-    depends_on: db
+    depends_on: 
+      - db
 
 volumes:
   django-app-mysql-volume:
