@@ -1,16 +1,29 @@
-
 # Steps:
-1. Clone the repo
+
+## Clone the repo:
+```
 git clone https://github.com/RabbiSE/django-app.git
+```
 
-2. Build the app using Dockerfile
+## Build the app image using Dockerfile:
+```
 docker build -t django-app .
+```
 
-3. Create bridge network:
-docker network create django-app-network -d bridge
+## Run the containers using docker compose:
+```
+docker compose up
+```
+or 
+```
+docker-compose -f docker-compose.yml up
+```
 
-4. Create volume:
-docker volume create django-app-mysql-volume
-
-5. run docker-compose file:
+## Build the app image and run the containers in one go:
+```
 docker compose up --build
+```
+or 
+```
+docker-compose -f docker-compose.yml up --build
+```
